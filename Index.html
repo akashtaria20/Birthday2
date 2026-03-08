@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For My Wonderful Sister</title>
+    <style>
+        /* --- CSS STYLING --- */
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #fce4ec; /* Light, happy pink background */
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: #f48fb1; /* Main header color */
+            padding: 50px 0;
+            text-align: center;
+            color: white;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 3rem;
+            margin: 0;
+            letter-spacing: 1px;
+        }
+
+        header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .timeline {
+            max-width: 900px;
+            margin: 50px auto;
+            position: relative;
+            padding: 0 20px;
+        }
+
+        /* The vertical line */
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 6px;
+            background-color: #f06292; /* Line color */
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -3px;
+        }
+
+        /* Container for each timeline block */
+        .container {
+            padding: 10px 40px;
+            position: relative;
+            background-color: inherit;
+            width: 50%;
+            opacity: 0; /* Hidden by default for JS animation */
+            transition: all 0.6s ease;
+        }
+
+        /* Dots on the timeline */
+        .container::after {
+            content: '';
+            position: absolute;
+            width: 25px;
+            height: 25px;
+            right: -17px;
+            background-color: white;
+            border: 4px solid #e91e63;
+            top: 15px;
+            border-radius: 50%;
+            z-index: 1;
+        }
+
+        /* Place the left containers */
+        .left {
+            left: 0;
+            transform: translateX(-50px);
+        }
+
+        /* Place the right containers */
+        .right {
+            left: 50%;
+            transform: translateX(50px);
+        }
+
+        /* Adjust the dots for right-aligned items */
+        .right::after {
+            left: -16px;
+        }
+
+        /* The actual content box (photos) */
+        .content {
+            padding: 20px 30px;
+            background-color: white;
+            position: relative;
+            border-radius: 15px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+
+        .content img {
+            width: 100%;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .content img:hover {
+            transform: scale(1.05); /* Slight zoom on hover */
+        }
+
+        .content p {
+            font-style: italic;
+            text-align: center;
+            margin-top: 15px;
+            color: #555;
+        }
+
+        /* Animation class to show the timeline items */
+        .container.show {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        /* Responsive design for mobiles */
+        @media screen and (max-width: 600px) {
+            .timeline::after {
+                left: 31px;
+            }
+
+            .container {
+                width: 100%;
+                padding-left: 70px;
+                padding-right: 25px;
+            }
+
+            .container::after {
+                left: 15px;
+            }
+
+            .right {
+                left: 0%;
+            }
+
+            .left {
+                transform: translateX(-20px);
+            }
+
+            .right {
+                transform: translateX(20px);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>For My Amazing Sister</h1>
+        <p>A little space to celebrate you!</p>
+    </header>
+
+    <div class="timeline">
+        <div class="container left">
+            <div class="content">
+                <img src="photo1.jpg" alt="A lovely memory" onclick="alert('You look stunning!')">
+                <p>One of my favorite pictures of you!</p>
+            </div>
+        </div>
+
+        <div class="container right">
+            <div class="content">
+                <img src="photo2.jpg" alt="A special moment" onclick="alert('Pure joy!')">
+                <p>This memory always makes me smile.</p>
+            </div>
+        </div>
+
+        <div class="container left">
+            <div class="content">
+                <img src="photo3.jpg" alt="Another picture" onclick="alert('Always shining!')">
+                <p>Your beautiful smile!</p>
+            </div>
+        </div>
+
+        <div class="container right">
+            <div class="content">
+                <img src="photo4.jpg" alt="Another sister moment" onclick="alert('We should do this again!')">
+                <p>From that unforgettable day.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Use Intersection Observer for scrolling animation
+        const containers = document.querySelectorAll('.container');
+
+        const options = {
+            threshold: 0.1, // Element shows when 10% is visible
+            rootMargin: '0px 0px -100px 0px' // Offset to start early
+        };
+
+        const observer = new IntersectionObserver(function(entries, observer) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+                entry.target.classList.add('show');
+                observer.unobserve(entry.target); // Animates only once
+            });
+        }, options);
+
+        containers.forEach(container => {
+            observer.observe(container);
+        });
+    </script>
+</body>
+</html>
